@@ -1,0 +1,25 @@
+/* postavljanje novog projekta */
+cd existing_folder
+git init //Inicijalizuje projekat samo jednom se radi
+git remote add origin https://https://github.com/BranislavOsadkovski/RESTFul.git //Dodaje origin
+git add .
+git commit -m "Initial commit"
+git push -u origin master   \\\if you need to change origin ::: git remote set-url origin "https://github.com/BranislavOsadkovski/RESTFul.git"
+
+git status //daje nam status
+
+/* Dobijanje projekta */
+git clone <link> // klonira projekat sa gita
+git pull //Dobija najnovije podatke sa servera
+
+<<<<<<< HEAD
+git add . // dodaje fajlove za commit
+git commit -m "<message>" // pravi commit (snapshot lokalno)
+git push // pushuje na servera
+
+git checkout -b "<ime-grane>" //pravi i prebacuje se na novu granu
+git checkout <ime-grane> // prebacuje se na granu
+=======
+
+Cao :D
+>>>>>>> c479a9559a817a7abe50cd2a8ab01712900d5b9b
