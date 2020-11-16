@@ -1,5 +1,5 @@
 # CloudFileEncryptor - App in progress 
-Store and encrypt your sensitive files on your personal cloud, accessible only by you
+Store and encrypt your sensitive data and files on your personal account, accessible only by you
 
 ## Important
-* Maven goals are defined for building the application Vue and Java combined, there is no need to build the Vue app, use 'mvn package' command to generate project .jar file and start the application with java -jar 'project'
+* Maven goals are defined for building the application Vue and Java combined, there is no need to build the Vue app. Use 'mvn package' command to generate the project .jar file and start the application with 'java -jar project.jar' command
