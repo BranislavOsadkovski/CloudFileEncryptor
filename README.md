@@ -1,5 +1,5 @@
 # CloudFileEncryptor - App in progress 
-Store and encrypt your sensitive data and files on your personal account, accessible only by you
+Store and encrypt your sensitive data and files on your personal account, accessible only by you. 
 File Encrypting application designed to help users save and store sensitive data by encrypting it with a one time key
 
 ## Important
