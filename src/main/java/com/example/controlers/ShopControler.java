@@ -1,22 +1,22 @@
 package com.example.controlers;
 
-import com.example.entity.Item;
 import com.example.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,8 +31,17 @@ public class ShopControler {
         this.shopService = shopService1;
     }
 
+
+    @Scheduled(cron = "0/5 * * * * ?")
+    public void chronometar(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        Date now = new Date();
+        String date = sdf.format(now);
+        System.out.println("Controler/Chronometar fire : " + date);
+    }
+
     @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String uploadFile(@RequestParam(value = "file") MultipartFile file,HttpServletResponse response) throws IOException {
+    public String uploadFile(@RequestParam(value = "file") MultipartFile file, HttpServletResponse response) throws IOException {
 
         File convertFile = new File("tmp/" + file.getOriginalFilename());
         boolean f = convertFile.createNewFile();
@@ -42,32 +51,32 @@ public class ShopControler {
         return "Upload successful" + convertFile.getAbsolutePath();
     }
 
-    @RequestMapping(value="/files",method =RequestMethod.GET)
-    public static List<ObjectNode> getFileNames(){
+    @RequestMapping(value = "/files", method = RequestMethod.GET)
+    public static List<ObjectNode> getFileNames() {
         List<ObjectNode> list = new ArrayList<>();
         File dir = new File("tmp");
         ObjectMapper mapper = new ObjectMapper();
-        for(File file : dir.listFiles()){
+        for (File file : dir.listFiles()) {
 
             ObjectNode item = mapper.createObjectNode();
-            item.put("name",file.getName());
+            item.put("name", file.getName());
             list.add(item);
 
         }
         return list;
     }
 
-    @RequestMapping(value = "/download/{file}",method = RequestMethod.GET)
+    @RequestMapping(value = "/download/{file}", method = RequestMethod.GET)
     public ResponseEntity<Object> download(@PathVariable("file") String name) throws FileNotFoundException {
-        File file = new File("tmp/"+name);
+        File file = new File("tmp/" + name);
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Allow-Credentials","true");
+        headers.add("Access-Control-Allow-Credentials", "true");
         headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getName()));
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
- 
+
         ResponseEntity<Object> response = ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.parseMediaType("application/txt")).body(resource);
 
         return response;
@@ -82,7 +91,7 @@ public class ShopControler {
     public ResponseEntity<?> hello(HttpServletRequest request, HttpServletResponse servletResponse) {
         request.getSession();
         User user = new User(1, "Load up start-up data", "bane");
-        Cookie c = new Cookie("MOJcookie",UUID.randomUUID().toString());
+        Cookie c = new Cookie("MOJcookie", UUID.randomUUID().toString());
         c.setPath("/");
         c.setMaxAge(3600);
         c.setSecure(false);
@@ -91,8 +100,8 @@ public class ShopControler {
         servletResponse.addCookie(c);
 
         HttpHeaders header = new HttpHeaders();
-        header.add("Access-Control-Allow-Credentials","true");
-        header.add("Set-Cookie",String.format("NoviCookie=%s; Max-Age=4444; Expires=true; Domain=localhost; Path=\"/\"; HttpOnly;",UUID.randomUUID()));
+        header.add("Access-Control-Allow-Credentials", "true");
+        header.add("Set-Cookie", String.format("NoviCookie=%s; Max-Age=4444; Expires=true; Domain=localhost; Path=\"/\"; HttpOnly;", UUID.randomUUID()));
         ResponseEntity<User> response = ResponseEntity.ok().headers(header).body(user);
 
         return response;
