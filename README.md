@@ -1,4 +1,4 @@
-# EncryptedFileSharing App(in progress...)
+# Data Sharing App(in progress...)
 Store,hare and encrypt your sensitive data and files on your personal account, accessible only by you.  
 File Encrypting application designed to help users safely share,save and store sensitive data by encrypting it with a one time key
 
