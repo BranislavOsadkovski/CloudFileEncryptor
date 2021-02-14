@@ -1,5 +1,5 @@
 # Data Sharing App (in progress...)
-Store,share and sensitive data and files, encrypted with your personal account, accessible only by you.  
+Store,share and sensitive data and files, encrypted with your personal account, accessible only by the user.  
 Encrypting application designed to help users safely share,save and store sensitive data by encrypting it with a user key
 
 ## Important
